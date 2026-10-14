@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>포트폴리오 편집 | 이재우</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./editor.css">
+  <script type="module" src="./editor.js"></script>
+</head>
+<body>
+  <header class="editor-header">
+    <a href="./" class="back-link">← 포트폴리오</a>
+    <div class="editor-actions"><button id="preview-button" disabled>미리보기</button><button class="primary" id="publish-button" disabled>사이트에 반영하기</button></div>
+  </header>
+  <div class="editor-layout">
+    <aside class="editor-sidebar">
+      <p class="eyebrow">MY PORTFOLIO</p>
+      <h1>내용 편집</h1>
+      <p>제목과 설명을 글처럼 수정하세요.</p>
+      <nav id="editor-nav" aria-label="편집 항목"></nav>
+      <div class="sidebar-tools"><button id="backup-button" disabled>문서 백업 받기</button><a href="https://github.com/mps0927/mps0927.github.io/edit/main/portfolio.md" target="_blank" rel="noopener noreferrer">문서 직접 열기 ↗</a></div>
+    </aside>
+    <main class="editor-main">
+      <p id="editor-status" class="notice" role="status">내용을 불러오는 중…</p>
+      <div id="draft-banner" class="notice" hidden><p id="draft-message"></p><div class="button-row"><button id="restore-draft">초안 이어쓰기</button><button id="download-draft">초안 백업 받기</button><button id="discard-draft">새로 시작</button></div></div>
+      <div id="undo-banner" class="notice" hidden>항목 삭제. <button id="undo-delete">되돌리기</button></div>
+      <form id="editor-form" novalidate></form>
+      <noscript>편집 화면을 사용하려면 JavaScript를 켜주세요. 문서 직접 열기 링크에서도 내용을 수정할 수 있습니다.</noscript>
+    </main>
+  </div>
+  <dialog id="preview-dialog" class="preview-dialog">
+    <div class="dialog-heading"><h2>미리보기</h2><button data-close="preview-dialog" aria-label="미리보기 닫기">닫기</button></div>
+    <iframe id="preview-frame" title="수정한 포트폴리오 미리보기" sandbox=""></iframe>
+  </dialog>
+  <dialog id="publish-dialog">
+    <div class="dialog-heading"><h2>GitHub에서 저장 마무리</h2><button data-close="publish-dialog" aria-label="저장 안내 닫기">닫기</button></div>
+    <p>아래 두 단계를 마치면 홈페이지에 반영돼요.</p>
+    <p id="publish-status" class="notice" role="status"></p>
+    <ol class="save-steps">
+      <li><button id="copy-document" class="primary" disabled>1. 수정한 내용 복사</button></li>
+      <li><a id="github-save" class="button-link" href="https://github.com/mps0927/mps0927.github.io/edit/main/portfolio.md" target="_blank" rel="noopener noreferrer">2. GitHub 저장 화면 열기 ↗</a><p>GitHub에 로그인한 뒤, 파일 내용 안을 클릭하고 <kbd>Ctrl</kbd> + <kbd>A</kbd> → <kbd>Ctrl</kbd> + <kbd>V</kbd>.<br>오른쪽 위 <b>Commit changes…</b>를 누르고 한 번 더 확정하세요.<br>Mac은 Ctrl 대신 ⌘ 사용. 휴대폰은 입력 영역을 길게 눌러 전체 선택 후 붙여넣기.</p></li>
+    </ol>
+    <details id="manual-copy"><summary>복사가 안 되면 직접 선택해서 복사</summary><label for="copy-source">복사할 전체 문서</label><textarea id="copy-source" readonly rows="8"></textarea><button id="select-document">전체 선택</button></details>
+    <p class="muted">GitHub에서 저장을 확정해야 공개돼요. 반영까지 보통 1~2분 소요. <a href="https://github.com/mps0927/mps0927.github.io/actions" target="_blank" rel="noopener noreferrer">배포 상태 ↗</a></p>
+  </dialog>
+</body>
+</html>
