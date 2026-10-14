@@ -1,0 +1,13 @@
+---
+layout: page
+title: 블로그
+permalink: /blog/
+---
+{% if site.posts.size > 0 %}
+<div class="post-list">{% for post in site.posts %}
+  <article><p class="date">{{ post.date | date: '%Y.%m.%d' }}</p><h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>
+    {% if post.description %}<p>{{ post.description | escape }}</p>{% endif %}
+    {% if post.tags.size > 0 %}<p class="post-tags">{{ post.tags | join: ' · ' | escape }}</p>{% endif %}
+  </article>
+{% endfor %}</div>
+{% else %}<p class="empty-posts">아직 등록된 글이 없습니다.</p>{% endif %}

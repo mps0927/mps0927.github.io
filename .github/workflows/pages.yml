@@ -1,0 +1,55 @@
+name: Build and deploy Jekyll
+
+on:
+  push:
+    branches: [main, codex/jekyll-markdown]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          destination: ./_site
+      - name: Check pages and local links
+        run: python3 scripts/check-site.py _site
+      - name: Upload production site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+      - name: Create an unpublished build fixture
+        run: cp tests/fixtures/post.md _posts/2000-01-01-build-check.md
+      - name: Check the blog post layout
+        uses: actions/jekyll-build-pages@v1
+        with:
+          destination: ./_blog_check
+      - name: Check post rendering
+        run: python3 scripts/check-site.py _blog_check --expect-post
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

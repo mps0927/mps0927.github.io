@@ -1,0 +1,45 @@
+title: 이재우
+description: 프로젝트 · CTF · 논문 · 교육사항
+url: https://mps0927.github.io
+baseurl: ""
+lang: ko
+timezone: Asia/Seoul
+markdown: kramdown
+highlighter: rouge
+permalink: /blog/:year/:month/:day/:title/
+future: false
+show_drafts: false
+kramdown:
+  input: GFM
+  hard_wrap: false
+collections:
+  projects:
+    output: false
+  ctf:
+    output: false
+  papers:
+    output: false
+  education:
+    output: false
+  activities:
+    output: false
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+exclude:
+  - README.md
+  - EDITING.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - tests
+  - scripts
+  - node_modules
+  - .preview
+  - .cache

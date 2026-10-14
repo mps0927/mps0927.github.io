@@ -1,49 +1,48 @@
-# 이재우 | Jaewoo Lee
+# 이재우
 
-[포트폴리오](https://mps0927.github.io/) · [내용 편집](https://mps0927.github.io/edit.html)
+[포트폴리오](https://mps0927.github.io/) · [블로그](https://mps0927.github.io/blog/) · [내용 수정 방법](EDITING.md)
+
+프로젝트, CTF, 논문, 학력·교육 이력 정리.
 
 ## 내용 수정
 
-1. **내용 편집**에서 소개·프로젝트·교육 등 원하는 항목 선택.
-2. 제목·기간·설명 수정 후 **미리보기**로 확인.
-3. **사이트에 반영하기** → **수정한 내용 복사** → **GitHub 저장 화면 열기**.
-4. GitHub 파일 내용 안을 클릭하고 전체 선택 후 붙여넣기. **Commit changes**로 저장 확정.
+수정할 문서를 열고 연필 아이콘 → 글 수정 → **Commit changes…**로 저장. GitHub Actions에서 Jekyll 빌드·배포 자동 실행.
 
-홈페이지 반영까지 보통 1~2분 소요. 작성 중인 초안은 현재 브라우저에 보관되며, GitHub에서 저장해야 공개 반영.
-
-[자세한 수정 안내](./EDITING.md) · [원본 문서](./portfolio.md)
-
-## 파일 구성
-
-| 파일 | 용도 |
+| 내용 | 문서 |
 | --- | --- |
-| `portfolio.md` | 소개·프로젝트·교육 내용 원본 |
-| `edit.html`, `editor.js`, `editor.css` | 내용 편집 화면 |
-| `portfolio.js` | 문서 읽기·저장·화면 표시 |
-| `styles.css` | 공개 홈페이지 디자인 |
-| `index.html` | 홈페이지와 마지막 생성본 |
-| `app.js` | 최신 문서 불러오기·이메일 복사·이력 저장 |
+| 소개·연락처 | [index.md](index.md) |
+| 프로젝트 | [_projects](_projects) |
+| CTF | [_ctf](_ctf) |
+| 논문 | [_papers](_papers) |
+| 학력·교육 | [_education](_education) |
+| 활동·자격 | [_activities](_activities) |
+| 블로그 글 | [_posts](_posts) |
 
-내용을 고칠 때 HTML 수정은 불필요. 홈페이지가 `portfolio.md`를 읽어 자동 표시.
+파일 위쪽 `---` 사이에는 제목·기간·순서, 아래에는 Markdown 본문 작성. 자세한 예시는 [작성 안내](EDITING.md) 참고.
 
-## 개발·검증
+## 구성
 
-외부 패키지 설치 없이 Node.js로 실행.
+- Jekyll + Markdown + GitHub Actions + GitHub Pages.
+- `_layouts`, `_includes`: 화면 구성.
+- `styles.css`: 포트폴리오 디자인.
+- `content.css`: Markdown 본문·블로그 스타일.
+- `.github/workflows/pages.yml`: 빌드, 링크 검사, 배포.
 
-```powershell
-npm test
-npm run build
-npm run preview
+## 로컬 미리보기
+
+Ruby와 Bundler가 설치된 환경에서 실행.
+
+```sh
+bundle install
+bundle exec jekyll serve
 ```
 
-[로컬 미리보기](http://127.0.0.1:4554/) · [로컬 편집기](http://127.0.0.1:4554/edit.html)
+브라우저에서 `http://localhost:4000` 확인. GitHub 웹에서 글만 수정할 때는 로컬 설치 불필요.
 
-`npm run build`는 문서에서 정적 HTML을 재생성하는 명령. 일반적인 내용 편집에는 실행 불필요.
+## 변경 이력
 
-## 디자인 되돌리기
+- `250a2ba`: 이전 문서 편집기 도입.
+- `5b4da36`: 포트폴리오 디자인 변경. `styles.css`만 수정한 커밋.
+- Jekyll 전환은 디자인과 별도 커밋. 디자인만 되돌릴 때 `git revert 5b4da36` 사용.
 
-편집 기능과 공개 홈페이지 디자인은 별도 커밋으로 관리. 디자인 변경 커밋은 `styles.css`만 수정하므로 해당 커밋만 되돌리면 내용과 편집 기능 유지.
-
-디자인 변경 이력 확인: `git log --oneline -- styles.css`
-
-`git revert 디자인커밋번호` 실행 후 `git push origin main`으로 반영. `reset --hard`나 강제 푸시는 불필요.
+Jekyll 전환 전체를 되돌릴 경우 해당 커밋을 되돌리고, 저장소 **Settings → Pages → Source**를 **Deploy from a branch / main / root**로 복원.

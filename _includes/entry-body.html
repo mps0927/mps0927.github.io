@@ -1,0 +1,10 @@
+{{ include.entry.content | markdownify | replace: '<ul>', '<ul class="entry-list">' }}
+{% for link in include.entry.links %}
+  <a class="paper-link" href="{{ link.url | escape }}" target="_blank" rel="noopener noreferrer">{{ link.label | escape }} ↗</a>
+{% endfor %}
+{% if include.entry.detail_body %}
+  <details>
+    <summary>{{ include.entry.detail_title | default: '상세 설명' | escape }}</summary>
+    <div class="detail-body">{{ include.entry.detail_body | markdownify | replace: '<ul>', '<ul class="entry-list">' }}</div>
+  </details>
+{% endif %}
