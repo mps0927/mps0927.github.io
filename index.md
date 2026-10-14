@@ -1,7 +1,7 @@
 ---
 layout: portfolio
 title: 포트폴리오
-name: 이재우
+display_name: 이재우
 english_name: Jaewoo Lee
 email: mps0927@gmail.com
 github: https://github.com/mps0927

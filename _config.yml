@@ -12,6 +12,8 @@ show_drafts: false
 kramdown:
   input: GFM
   hard_wrap: false
+  typographic_symbols:
+    hellip: "..."
 collections:
   projects:
     output: false

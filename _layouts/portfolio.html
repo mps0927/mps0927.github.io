@@ -10,7 +10,7 @@ layout: default
 <div class="page" id="top">
   <header class="profile">
     <div class="profile-heading">
-      <div><h1>{{ page.name | escape }} <span>{{ page.english_name | escape }}</span></h1>
+      <div><h1>{{ page.display_name | escape }} <span>{{ page.english_name | escape }}</span></h1>
         {{ content | replace: '<ul>', '<ul class="entry-list profile-summary">' }}
       </div>
       <button class="print-button" id="print-summary">이력 저장 ↗</button>

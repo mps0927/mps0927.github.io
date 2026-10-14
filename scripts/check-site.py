@@ -11,6 +11,8 @@ class Page(HTMLParser):
         self.ids = set()
         self.links = []
         self.lang = None
+        self.in_heading = False
+        self.heading = ''
         self.feed(html)
 
     def handle_starttag(self, tag, attrs):
@@ -20,9 +22,19 @@ class Page(HTMLParser):
             self.ids.add(attrs['id'])
         if tag == 'html':
             self.lang = attrs.get('lang')
+        if tag == 'h1':
+            self.in_heading = True
         for attr in ('href', 'src'):
             if attrs.get(attr):
                 self.links.append(attrs[attr])
+
+    def handle_endtag(self, tag):
+        if tag == 'h1':
+            self.in_heading = False
+
+    def handle_data(self, data):
+        if self.in_heading:
+            self.heading += data
 
 
 root = Path(sys.argv[1]).resolve()
@@ -36,6 +48,7 @@ for path in root.rglob('*.html'):
 
 home = root / 'index.html'
 assert home in pages
+assert pages[home].heading.strip() and '.md' not in pages[home].heading, 'Profile name replaced by a Jekyll filename'
 for section in ['projects', 'ctf', 'papers', 'education', 'activities']:
     if any(Path('_' + section).glob('*.md')):
         assert section in pages[home].ids, f'Missing portfolio section: {section}'
