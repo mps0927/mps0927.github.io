@@ -1,0 +1,8 @@
+<div class="entry-heading">
+  <{{ include.tag | default: 'h3' }}>{{ include.entry.title | escape }}</{{ include.tag | default: 'h3' }}>
+  <div class="entry-meta">
+    {% if include.entry.status %}<span class="status">{{ include.entry.status | escape }}</span>{% endif %}
+    {% unless include.hide_date %}{% if include.entry.period %}<span class="date">{{ include.entry.period | escape }}</span>{% endif %}{% endunless %}
+    {% if include.entry.label %}<span class="entry-label">{{ include.entry.label | escape }}</span>{% endif %}
+  </div>
+</div>

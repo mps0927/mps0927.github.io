@@ -1,0 +1,95 @@
+---
+layout: default
+---
+{% assign projects = site.projects | sort: 'order' %}
+{% assign competitions = site.ctf | sort: 'order' %}
+{% assign papers = site.papers | sort: 'order' %}
+{% assign degrees = site.education | where: 'category', 'degree' | sort: 'order' %}
+{% assign training = site.education | where: 'category', 'training' | sort: 'order' %}
+{% assign activities = site.activities | sort: 'order' %}
+<div class="page" id="top">
+  <header class="profile">
+    <div class="profile-heading">
+      <div><h1>{{ page.display_name | escape }} <span>{{ page.english_name | escape }}</span></h1>
+        {{ content | replace: '<ul>', '<ul class="entry-list profile-summary">' }}
+      </div>
+      <button class="print-button" id="print-summary">이력 저장 ↗</button>
+    </div>
+    <p class="profile-bio">{% for line in page.bio %}{{ line | escape }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</p>
+    <div class="profile-links">
+      <a href="{{ page.github | escape }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <a href="mailto:{{ page.email | escape }}">{{ page.email | escape }}</a>
+      <button id="copy-email" data-email="{{ page.email | escape }}" aria-label="이메일 주소 복사">복사</button><span id="copy-status" role="status"></span>
+    </div>
+  </header>
+  <nav class="navigation" aria-label="포트폴리오 목차">
+    {% if projects.size > 0 %}<a href="#projects">프로젝트</a>{% endif %}
+    {% if competitions.size > 0 %}<a href="#ctf">CTF</a>{% endif %}
+    {% if papers.size > 0 %}<a href="#papers">논문</a>{% endif %}
+    {% if site.education.size > 0 %}<a href="#education">교육사항</a>{% endif %}
+    {% if activities.size > 0 %}<a href="#activities">활동·자격</a>{% endif %}
+    <a href="{{ '/blog/' | relative_url }}">블로그 ↗</a>
+  </nav>
+  <main id="main">
+    {% if projects.size > 0 %}
+    <section id="projects" aria-labelledby="projects-title"><h2 id="projects-title">프로젝트</h2>
+      {% for entry in projects %}<article class="project">
+        {% include entry-heading.html entry=entry %}
+        {% if entry.organization %}<p class="entry-context">{{ entry.organization | escape }}</p>{% endif %}
+        {% include entry-body.html entry=entry %}
+      </article>{% endfor %}
+    </section>
+    {% endif %}
+    {% if competitions.size > 0 %}
+    <section id="ctf" aria-labelledby="ctf-title"><h2 id="ctf-title">CTF</h2>
+      <div class="table-scroll"><table class="ctf-table"><caption class="sr-only">CTF 대회 성과</caption>
+        <thead><tr><th scope="col">연도</th><th scope="col">대회</th><th scope="col">결과</th></tr></thead>
+        <tbody>{% for entry in competitions %}<tr>
+          <td class="date">{{ entry.period | escape }}</td>
+          <td><strong>{{ entry.title | escape }}</strong><span class="cell-description">{{ entry.organization | escape }}</span>{% include entry-body.html entry=entry %}</td>
+          <td><span class="result">{{ entry.result | escape }}</span></td>
+        </tr>{% endfor %}</tbody>
+      </table></div>
+    </section>
+    {% endif %}
+    {% if papers.size > 0 %}
+    <section id="papers" aria-labelledby="papers-title"><h2 id="papers-title">논문</h2>
+      {% for entry in papers %}<article class="paper">
+        {% include entry-heading.html entry=entry %}
+        {% if entry.organization %}<p class="entry-context">{{ entry.organization | escape }}</p>{% endif %}
+        {% include entry-body.html entry=entry %}
+      </article>{% endfor %}
+    </section>
+    {% endif %}
+    {% if site.education.size > 0 %}
+    <section id="education" aria-labelledby="education-title"><h2 id="education-title">교육사항</h2>
+      {% if degrees.size > 0 %}<h3 class="subheading">학력</h3>{% endif %}
+      {% for entry in degrees %}<article class="degree">
+        {% include entry-heading.html entry=entry tag='h4' %}
+        <p>{{ entry.organization | escape }}</p>
+        {% if entry.gpa %}<p class="gpa">학점 <strong>{{ entry.gpa | escape }}</strong></p>{% endif %}
+        {% capture degree_body %}{% include entry-body.html entry=entry %}{% endcapture %}
+        {{ degree_body | replace: 'class="entry-list"', 'class="entry-list degree-courses"' }}
+      </article>{% endfor %}
+      {% if training.size > 0 %}<h3 class="subheading course-heading">교육·부트캠프</h3>
+      <div class="education-list">{% for entry in training %}<article class="education-entry">
+        <div class="education-date">{{ entry.period | escape }}</div><div>
+          {% include entry-heading.html entry=entry tag='h4' hide_date=true %}
+          {% if entry.organization %}<p class="entry-context">{{ entry.organization | escape }}</p>{% endif %}
+          {% include entry-body.html entry=entry %}
+        </div>
+      </article>{% endfor %}</div>{% endif %}
+    </section>
+    {% endif %}
+    {% if activities.size > 0 %}
+    <section id="activities" aria-labelledby="activities-title"><h2 id="activities-title">활동·자격</h2>
+      <div class="activity-list">{% for entry in activities %}<article class="activity">
+        {% include entry-heading.html entry=entry %}
+        {% if entry.organization %}<p class="entry-context">{{ entry.organization | escape }}</p>{% endif %}
+        {% include entry-body.html entry=entry %}
+      </article>{% endfor %}</div>
+    </section>
+    {% endif %}
+  </main>
+  {% include footer.html %}
+</div>

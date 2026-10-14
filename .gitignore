@@ -8,8 +8,19 @@ desktop.ini
 .cache/
 node_modules/
 *.log
+__pycache__/
+*.pyc
 
 # Credentials
 .env
 .env.*
 !.env.example
+
+# Jekyll local build
+_site/
+_blog_check/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/

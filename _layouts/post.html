@@ -1,0 +1,11 @@
+---
+layout: default
+---
+<div class="page" id="top">
+  <header class="document-header"><a href="{{ '/blog/' | relative_url }}">← 블로그</a>
+    <h1>{{ page.title | escape }}</h1><p class="date">{{ page.date | date: '%Y.%m.%d' }}</p>
+    {% if page.tags.size > 0 %}<p class="post-tags">{{ page.tags | join: ' · ' | escape }}</p>{% endif %}
+  </header>
+  <main id="main" class="document"><article>{{ content }}</article></main>
+  {% include footer.html %}
+</div>
