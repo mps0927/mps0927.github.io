@@ -4,7 +4,7 @@
 GitHub: https://github.com/mps0927
 
 ## 소개
-- 차량 보안에 관심있는 취준생입니다~
+- 차량 보안에 관심있는 취준생입니다
 - 최근 CTF, AI for Security, Security for AI에 관심이 생겨 공부하는 중입니다...
 
 ## 약력
